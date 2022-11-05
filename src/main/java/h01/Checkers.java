@@ -127,7 +127,165 @@ public class Checkers {
      * Runs the initialization of all black stones.
      */
     public void initBlackStones() {
-        crash(); // TODO: H1.2 - remove if implemented
+        // We have to initialize 5 black stones in the same way. Therefore, a method is recommended to reduce code
+        // duplication.
+
+        // Black stone 0
+
+        // Random coordinates
+        int x;
+        int y;
+        do {
+            // Generate random coordinates between 0 and NUMBER_OF_COLUMNS - 1 for the x coordinate
+            // and between 0 and NUMBER_OF_ROWS - 1 for the y coordinate.
+            // nextInt(bound) returns a random integer between 0 (inclusive) and bound (exclusive)
+            x = ThreadLocalRandom.current().nextInt(NUMBER_OF_COLUMNS);
+            y = ThreadLocalRandom.current().nextInt(NUMBER_OF_ROWS);
+        }
+        // Sum of x and y must be odd and the black stone must not be on the same position as the white stone
+        while ((x + y) % 2 == 0 || whiteStone.getX() == x && whiteStone.getY() == y);
+
+        // Random direction, map int to Direction
+        int randomDirection = ThreadLocalRandom.current().nextInt(4);
+        Direction direction;
+        if (randomDirection == 0) {
+            direction = Direction.UP;
+        } else if (randomDirection == 1) {
+            direction = Direction.RIGHT;
+        } else if (randomDirection == 2) {
+            direction = Direction.DOWN;
+        } else {
+            // Since the interval is between [0,4], we do not have to explicit check randomDirection == 4
+            direction = Direction.LEFT;
+        }
+
+        // Random number of coins (do not forget that the second parameter of nextInt is exclusive)
+        int numberOfCoins = ThreadLocalRandom.current().nextInt(MIN_NUMBER_OF_COINS, MAX_NUMBER_OF_COINS + 1);
+        blackStone0 = new Robot(x, y, direction, numberOfCoins);
+
+
+        // Black stone 1
+
+        // Random coordinates
+        do {
+            // Generate random coordinates between 0 and NUMBER_OF_COLUMNS - 1 for the x coordinate
+            // and between 0 and NUMBER_OF_ROWS - 1 for the y coordinate.
+            // nextInt(bound) returns a random integer between 0 (inclusive) and bound (exclusive)
+            x = ThreadLocalRandom.current().nextInt(NUMBER_OF_COLUMNS);
+            y = ThreadLocalRandom.current().nextInt(NUMBER_OF_ROWS);
+        }
+        // Sum of x and y must be odd and the black stone must not be on the same position as the white stone
+        while ((x + y) % 2 == 0 || whiteStone.getX() == x && whiteStone.getY() == y);
+
+        // Random direction, map int to Direction
+        randomDirection = ThreadLocalRandom.current().nextInt(4);
+        if (randomDirection == 0) {
+            direction = Direction.UP;
+        } else if (randomDirection == 1) {
+            direction = Direction.RIGHT;
+        } else if (randomDirection == 2) {
+            direction = Direction.DOWN;
+        } else {
+            // Since the interval is between [0,4], we do not have to explicit check randomDirection == 4
+            direction = Direction.LEFT;
+        }
+
+        // Random number of coins (do not forget that the second parameter of nextInt is exclusive)
+        numberOfCoins = ThreadLocalRandom.current().nextInt(MIN_NUMBER_OF_COINS, MAX_NUMBER_OF_COINS + 1);
+        blackStone1 = new Robot(x, y, direction, numberOfCoins);
+
+
+        // Black stone 2
+
+        // Random coordinates
+        do {
+            // Generate random coordinates between 0 and NUMBER_OF_COLUMNS - 1 for the x coordinate
+            // and between 0 and NUMBER_OF_ROWS - 1 for the y coordinate.
+            // nextInt(bound) returns a random integer between 0 (inclusive) and bound (exclusive)
+            x = ThreadLocalRandom.current().nextInt(NUMBER_OF_COLUMNS);
+            y = ThreadLocalRandom.current().nextInt(NUMBER_OF_ROWS);
+        }
+        // Sum of x and y must be odd and the black stone must not be on the same position as the white stone
+        while ((x + y) % 2 == 0 || whiteStone.getX() == x && whiteStone.getY() == y);
+
+        // Random direction, map int to Direction
+        randomDirection = ThreadLocalRandom.current().nextInt(4);
+        if (randomDirection == 0) {
+            direction = Direction.UP;
+        } else if (randomDirection == 1) {
+            direction = Direction.RIGHT;
+        } else if (randomDirection == 2) {
+            direction = Direction.DOWN;
+        } else {
+            // Since the interval is between [0,4], we do not have to explicit check randomDirection == 4
+            direction = Direction.LEFT;
+        }
+
+        // Random number of coins (do not forget that the second parameter of nextInt is exclusive)
+        numberOfCoins = ThreadLocalRandom.current().nextInt(MIN_NUMBER_OF_COINS, MAX_NUMBER_OF_COINS + 1);
+        blackStone2 = new Robot(x, y, direction, numberOfCoins);
+
+
+        // Black stone 3
+
+        // Random coordinates
+        do {
+            // Generate random coordinates between 0 and NUMBER_OF_COLUMNS - 1 for the x coordinate
+            // and between 0 and NUMBER_OF_ROWS - 1 for the y coordinate.
+            // nextInt(bound) returns a random integer between 0 (inclusive) and bound (exclusive)
+            x = ThreadLocalRandom.current().nextInt(NUMBER_OF_COLUMNS);
+            y = ThreadLocalRandom.current().nextInt(NUMBER_OF_ROWS);
+        }
+        // Sum of x and y must be odd and the black stone must not be on the same position as the white stone
+        while ((x + y) % 2 == 0 || whiteStone.getX() == x && whiteStone.getY() == y);
+
+        // Random direction, map int to Direction
+        randomDirection = ThreadLocalRandom.current().nextInt(4);
+        if (randomDirection == 0) {
+            direction = Direction.UP;
+        } else if (randomDirection == 1) {
+            direction = Direction.RIGHT;
+        } else if (randomDirection == 2) {
+            direction = Direction.DOWN;
+        } else {
+            // Since the interval is between [0,4], we do not have to explicit check randomDirection == 4
+            direction = Direction.LEFT;
+        }
+
+        // Random number of coins (do not forget that the second parameter of nextInt is exclusive)
+        numberOfCoins = ThreadLocalRandom.current().nextInt(MIN_NUMBER_OF_COINS, MAX_NUMBER_OF_COINS + 1);
+        blackStone3 = new Robot(x, y, direction, numberOfCoins);
+
+
+        // Black stone 4
+
+        // Random coordinates
+        do {
+            // Generate random coordinates between 0 and NUMBER_OF_COLUMNS - 1 for the x coordinate
+            // and between 0 and NUMBER_OF_ROWS - 1 for the y coordinate.
+            // nextInt(bound) returns a random integer between 0 (inclusive) and bound (exclusive)
+            x = ThreadLocalRandom.current().nextInt(NUMBER_OF_COLUMNS);
+            y = ThreadLocalRandom.current().nextInt(NUMBER_OF_ROWS);
+        }
+        // Sum of x and y must be odd and the black stone must not be on the same position as the white stone
+        while ((x + y) % 2 == 0 || whiteStone.getX() == x && whiteStone.getY() == y);
+
+        // Random direction, map int to Direction
+        randomDirection = ThreadLocalRandom.current().nextInt(4);
+        if (randomDirection == 0) {
+            direction = Direction.UP;
+        } else if (randomDirection == 1) {
+            direction = Direction.RIGHT;
+        } else if (randomDirection == 2) {
+            direction = Direction.DOWN;
+        } else {
+            // Since the interval is between [0,4], we do not have to explicit check randomDirection == 4
+            direction = Direction.LEFT;
+        }
+
+        // Random number of coins (do not forget that the second parameter of nextInt is exclusive)
+        numberOfCoins = ThreadLocalRandom.current().nextInt(MIN_NUMBER_OF_COINS, MAX_NUMBER_OF_COINS + 1);
+        blackStone4 = new Robot(x, y, direction, numberOfCoins);
     }
 
     /**
