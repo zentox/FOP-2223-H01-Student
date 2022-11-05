@@ -1,11 +1,13 @@
 package h01;
 
+import fopbot.Direction;
 import fopbot.Robot;
 import fopbot.World;
+import org.tudalgo.algoutils.student.Student;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-import org.tudalgo.algoutils.student.Student;
+
 import static org.tudalgo.algoutils.student.Student.crash;
 import static org.tudalgo.algoutils.student.io.PropertyUtils.getIntProperty;
 
@@ -91,7 +93,34 @@ public class Checkers {
      * Runs the initialization of the white stone.
      */
     public void initWhiteStone() {
-        crash(); // TODO: H1.1 - remove if implemented
+        // Random coordinates
+        int x;
+        int y;
+        do {
+            // Generate random coordinates between 0 and NUMBER_OF_COLUMNS - 1 for the x coordinate
+            // and between 0 and NUMBER_OF_ROWS - 1 for the y coordinate.
+            // nextInt(bound) returns a random integer between 0 (inclusive) and bound (exclusive)
+            x = ThreadLocalRandom.current().nextInt(NUMBER_OF_COLUMNS);
+            y = ThreadLocalRandom.current().nextInt(NUMBER_OF_ROWS);
+        }
+        // Sum of x and y must be odd
+        while ((x + y) % 2 == 0);
+
+        // Random direction, map int to Direction
+        int randomDirection = ThreadLocalRandom.current().nextInt(4);
+        Direction direction;
+        if (randomDirection == 0) {
+            direction = Direction.UP;
+        } else if (randomDirection == 1) {
+            direction = Direction.RIGHT;
+        } else if (randomDirection == 2) {
+            direction = Direction.DOWN;
+        } else {
+            // Since the interval is between [0,4], we do not have to explicit check randomDirection == 4
+            direction = Direction.LEFT;
+        }
+
+        whiteStone = new Robot(x, y, direction, 0);
     }
 
     /**
@@ -130,4 +159,5 @@ public class Checkers {
     private Random getRandom() {
         return ThreadLocalRandom.current();
     }
+
 }
