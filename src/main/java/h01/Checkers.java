@@ -474,7 +474,17 @@ public class Checkers {
      * Checks if a team has won the game and, if so, updates the game state to {@link GameState#BLACK_WIN} or {@link GameState#WHITE_WIN}.
      */
     public void updateGameState() {
-        crash(); // TODO: H2.3 - remove if implemented
+        // White wins if all black stones are turned off
+        boolean isWhiteWin = blackStone0.isTurnedOff() && blackStone1.isTurnedOff() && blackStone2.isTurnedOff()
+            && blackStone3.isTurnedOff() && blackStone4.isTurnedOff();
+        // Black wins if all black stones do not have any coins
+        boolean isBlackWin = !blackStone0.hasAnyCoins() && !blackStone1.hasAnyCoins() && !blackStone2.hasAnyCoins()
+            && !blackStone3.hasAnyCoins() && !blackStone4.hasAnyCoins();
+        if (isWhiteWin) {
+            gameState = GameState.WHITE_WIN;
+        } else if (isBlackWin) {
+            gameState = GameState.BLACK_WIN;
+        }
     }
 
     /**
