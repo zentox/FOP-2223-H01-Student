@@ -292,7 +292,175 @@ public class Checkers {
      * Runs the action of the black team.
      */
     public void doBlackTeamActions() {
-        crash(); // TODO: H2.1 - remove if implemented
+        // Choose a random black stone (remember that the parameter of nextInt is exclusive) which is not off and
+        // which has at least one coin
+        Robot blackStone;
+        int randomBlackStone;
+        do {
+            randomBlackStone = ThreadLocalRandom.current().nextInt(6);
+            if (randomBlackStone == 0) {
+                blackStone = blackStone0;
+            } else if (randomBlackStone == 1) {
+                blackStone = blackStone1;
+            } else if (randomBlackStone == 2) {
+                blackStone = blackStone2;
+            } else if (randomBlackStone == 3) {
+                blackStone = blackStone3;
+            } else {
+                // Since the interval is between [0,6], we do not have to explicit check randomBlackStone == 6
+                blackStone = blackStone4;
+            }
+        } while (blackStone.isTurnedOff() || blackStone.getNumberOfCoins() == 0);
+        // Alternatively, you can use !blackStone.hasAnyCoins()
+
+        // We checked that the black stone has at least one coin, so we can put a coin without any problems
+        blackStone.putCoin();
+
+        // Moving actions depend on current direction of the black stone
+        // A target field is valid if is within the world and is not occupied by a white stone
+        // (x != whiteStone.getX() || y != whiteStone.getY()) and not
+        // (x != whiteStone.getX() && y != whiteStone.getY())!
+        if (blackStone.isFacingUp()) {
+            // Target field 1: up right of current direction (x+1, y+1)
+            if (blackStone.getX() + 1 < NUMBER_OF_COLUMNS && blackStone.getY() + 1 < NUMBER_OF_ROWS
+                && (blackStone.getX() + 1 != whiteStone.getX() || blackStone.getY() + 1 != whiteStone.getY())) {
+                blackStone.move();
+                // 3x left turn = right turn
+                blackStone.turnLeft();
+                blackStone.turnLeft();
+                blackStone.turnLeft();
+                blackStone.move();
+            }
+            // Target field 2: up left of current direction (x-1, y+1)
+            else if (blackStone.getX() - 1 >= 0 && blackStone.getY() + 1 < NUMBER_OF_ROWS
+                && (blackStone.getX() - 1 != whiteStone.getX() || blackStone.getY() + 1 != whiteStone.getY())) {
+                blackStone.move();
+                blackStone.turnLeft();
+                blackStone.move();
+            }
+            // Target field 3: down left of current direction (x-1, y-1)
+            else if (blackStone.getX() - 1 >= 0 && blackStone.getY() - 1 >= 0
+                && (blackStone.getX() - 1 != whiteStone.getX() || blackStone.getY() - 1 != whiteStone.getY())) {
+                blackStone.turnLeft();
+                blackStone.move();
+                blackStone.turnLeft();
+                blackStone.move();
+            }
+            // Target field 4: down right of current direction (x+1, y-1)
+            else if (blackStone.getX() + 1 < NUMBER_OF_COLUMNS && blackStone.getY() - 1 >= 0
+                && (blackStone.getX() + 1 != whiteStone.getX() || blackStone.getY() - 1 != whiteStone.getY())) {
+                blackStone.turnLeft();
+                blackStone.turnLeft();
+                blackStone.move();
+                blackStone.turnLeft();
+                blackStone.move();
+            }
+        } else if (blackStone.isFacingRight()) {
+            // Target field 1: up right of current direction (x+1, y-1)
+            if (blackStone.getX() + 1 < NUMBER_OF_COLUMNS && blackStone.getY() - 1 >= 0
+                && (blackStone.getX() + 1 != whiteStone.getX() || blackStone.getY() - 1 != whiteStone.getY())) {
+                blackStone.move();
+                // 3x left turn = right turn
+                blackStone.turnLeft();
+                blackStone.turnLeft();
+                blackStone.turnLeft();
+                blackStone.move();
+            }
+            // Target field 2: up left of current direction (x+1, y+1)
+            else if (blackStone.getX() + 1 < NUMBER_OF_COLUMNS && blackStone.getY() + 1 < NUMBER_OF_ROWS
+                && (blackStone.getX() + 1 != whiteStone.getX() || blackStone.getY() + 1 != whiteStone.getY())) {
+                blackStone.move();
+                blackStone.turnLeft();
+                blackStone.move();
+            }
+            // Target field 3: down left of current direction (x-1, y+1)
+            else if (blackStone.getX() - 1 >= 0 && blackStone.getY() + 1 < NUMBER_OF_ROWS
+                && (blackStone.getX() - 1 != whiteStone.getX() || blackStone.getY() + 1 != whiteStone.getY())) {
+                blackStone.turnLeft();
+                blackStone.move();
+                blackStone.turnLeft();
+                blackStone.move();
+            }
+            // Target field 4: down right of current direction (x-1, y-1)
+            else if (blackStone.getX() - 1 >= 0 && blackStone.getY() - 1 >= 0
+                && (blackStone.getX() - 1 != whiteStone.getX() || blackStone.getY() - 1 != whiteStone.getY())) {
+                blackStone.turnLeft();
+                blackStone.turnLeft();
+                blackStone.move();
+                blackStone.turnLeft();
+                blackStone.move();
+            }
+        } else if (blackStone.isFacingDown()) {
+            // Target field 1: up right of current direction (x-1, y-1)
+            if (blackStone.getX() - 1 >= 0 && blackStone.getY() - 1 >= 0
+                && (blackStone.getX() - 1 != whiteStone.getX() || blackStone.getY() - 1 != whiteStone.getY())) {
+                blackStone.move();
+                // 3x left turn = right turn
+                blackStone.turnLeft();
+                blackStone.turnLeft();
+                blackStone.turnLeft();
+                blackStone.move();
+            }
+            // Target field 2: up left of current direction (x+1, y-1)
+            else if (blackStone.getX() + 1 < NUMBER_OF_COLUMNS && blackStone.getY() - 1 >= 0
+                && (blackStone.getX() + 1 != whiteStone.getX() || blackStone.getY() - 1 != whiteStone.getY())) {
+                blackStone.move();
+                blackStone.turnLeft();
+                blackStone.move();
+            }
+            // Target field 3: down left of current direction (x+1, y+1)
+            else if (blackStone.getX() + 1 < NUMBER_OF_COLUMNS && blackStone.getY() + 1 < NUMBER_OF_ROWS
+                && (blackStone.getX() + 1 != whiteStone.getX() || blackStone.getY() + 1 != whiteStone.getY())) {
+                blackStone.turnLeft();
+                blackStone.move();
+                blackStone.turnLeft();
+                blackStone.move();
+            }
+            // Target field 4: down right of current direction (x-1, y-1)
+            else if (blackStone.getX() - 1 >= 0 && blackStone.getY() + 1 < NUMBER_OF_ROWS
+                && (blackStone.getX() - 1 != whiteStone.getX() || blackStone.getY() + 1 != whiteStone.getY())) {
+                blackStone.turnLeft();
+                blackStone.turnLeft();
+                blackStone.move();
+                blackStone.turnLeft();
+                blackStone.move();
+            }
+        } else if (blackStone.isFacingLeft()) {
+            // Target field 1: up right of current direction (x-1, y+1)
+            if (blackStone.getX() - 1 >= 0 && blackStone.getY() + 1 < NUMBER_OF_ROWS
+                && (blackStone.getX() - 1 != whiteStone.getX() || blackStone.getY() + 1 != whiteStone.getY())) {
+                blackStone.move();
+                // 3x left turn = right turn
+                blackStone.turnLeft();
+                blackStone.turnLeft();
+                blackStone.turnLeft();
+                blackStone.move();
+            }
+            // Target field 2: up left of current direction (x-1, y-1)
+            else if (blackStone.getX() - 1 >= 0 && blackStone.getY() - 1 >= 0
+                && (blackStone.getX() - 1 != whiteStone.getX() || blackStone.getY() - 1 != whiteStone.getY())) {
+                blackStone.move();
+                blackStone.turnLeft();
+                blackStone.move();
+            }
+            // Target field 3: down left of current direction (x+1, y-1)
+            else if (blackStone.getX() + 1 < NUMBER_OF_COLUMNS && blackStone.getY() - 1 >= 0
+                && (blackStone.getX() + 1 != whiteStone.getX() || blackStone.getY() - 1 != whiteStone.getY())) {
+                blackStone.turnLeft();
+                blackStone.move();
+                blackStone.turnLeft();
+                blackStone.move();
+            }
+            // Target field 4: down right of current direction (x+1, y+1)
+            else if (blackStone.getX() + 1 < NUMBER_OF_ROWS && blackStone.getY() + 1 < NUMBER_OF_ROWS
+                && (blackStone.getX() + 1 != whiteStone.getX() || blackStone.getY() + 1 != whiteStone.getY())) {
+                blackStone.turnLeft();
+                blackStone.turnLeft();
+                blackStone.move();
+                blackStone.turnLeft();
+                blackStone.move();
+            }
+        }
     }
 
     /**
