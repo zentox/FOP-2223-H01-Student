@@ -503,23 +503,43 @@ public class Checkers {
             while (x + dx >= 0 && x + dx < NUMBER_OF_COLUMNS && y + dy >= 0 && y + dy < NUMBER_OF_ROWS) {
                 // Check if the field is occupied by a black stone (black stone must be turned on
                 // If we found one, we can stop the search
-                if (blackStone0.isTurnedOn() && blackStone0.getX() == x && blackStone0.getY() == y) {
+                if (blackStone0.isTurnedOn() && blackStone0.getX() == x && blackStone0.getY() == y
+                    && !(blackStone1.isTurnedOn() && blackStone1.getX() == x + dx && blackStone1.getY() == y + dy
+                    || blackStone2.isTurnedOn() && blackStone2.getX() == x + dx && blackStone2.getY() == y + dy
+                    || blackStone3.isTurnedOn() && blackStone3.getX() == x + dx && blackStone3.getY() == y + dy
+                    || blackStone4.isTurnedOn() && blackStone4.getX() == x + dx && blackStone4.getY() == y + dy)) {
                     blackStone0.turnOff();
                     whiteStone.setField(x + dx, y + dy);
                     return;
-                } else if (blackStone1.isTurnedOn() && blackStone1.getX() == x && blackStone1.getY() == y) {
+                } else if (blackStone1.isTurnedOn() && blackStone1.getX() == x && blackStone1.getY() == y
+                    && !(blackStone0.isTurnedOn() && blackStone0.getX() == x + dx && blackStone0.getY() == y + dy
+                    || blackStone2.isTurnedOn() && blackStone2.getX() == x + dx && blackStone2.getY() == y + dy
+                    || blackStone3.isTurnedOn() && blackStone3.getX() == x + dx && blackStone3.getY() == y + dy
+                    || blackStone4.isTurnedOn() && blackStone4.getX() == x + dx && blackStone4.getY() == y + dy)) {
                     blackStone1.turnOff();
                     whiteStone.setField(x + dx, y + dy);
                     return;
-                } else if (blackStone2.isTurnedOn() && blackStone2.getX() == x && blackStone2.getY() == y) {
+                } else if (blackStone2.isTurnedOn() && blackStone2.getX() == x && blackStone2.getY() == y
+                    && !(blackStone0.isTurnedOn() && blackStone0.getX() == x + dx && blackStone0.getY() == y + dy
+                    || blackStone1.isTurnedOn() && blackStone1.getX() == x + dx && blackStone1.getY() == y + dy
+                    || blackStone3.isTurnedOn() && blackStone3.getX() == x + dx && blackStone3.getY() == y + dy
+                    || blackStone4.isTurnedOn() && blackStone4.getX() == x + dx && blackStone4.getY() == y + dy)) {
                     blackStone2.turnOff();
                     whiteStone.setField(x + dx, y + dy);
                     return;
-                } else if (blackStone3.isTurnedOn() && blackStone3.getX() == x && blackStone3.getY() == y) {
+                } else if (blackStone3.isTurnedOn() && blackStone3.getX() == x && blackStone3.getY() == y
+                    && !(blackStone0.isTurnedOn() && blackStone0.getX() == x + dx && blackStone0.getY() == y + dy
+                    || blackStone1.isTurnedOn() && blackStone1.getX() == x + dx && blackStone1.getY() == y + dy
+                    || blackStone2.isTurnedOn() && blackStone2.getX() == x + dx && blackStone2.getY() == y + dy
+                    || blackStone4.isTurnedOn() && blackStone4.getX() == x + dx && blackStone4.getY() == y + dy)) {
                     blackStone3.turnOff();
                     whiteStone.setField(x + dx, y + dy);
                     return;
-                } else if (blackStone4.isTurnedOn() && blackStone4.getX() == x && blackStone4.getY() == y) {
+                } else if (blackStone4.isTurnedOn() && blackStone4.getX() == x && blackStone4.getY() == y
+                    && !(blackStone0.isTurnedOn() && blackStone0.getX() == x + dx && blackStone0.getY() == y + dy
+                    || blackStone1.isTurnedOn() && blackStone1.getX() == x + dx && blackStone1.getY() == y + dy
+                    || blackStone2.isTurnedOn() && blackStone2.getX() == x + dx && blackStone2.getY() == y + dy
+                    || blackStone3.isTurnedOn() && blackStone3.getX() == x + dx && blackStone3.getY() == y + dy)) {
                     blackStone4.turnOff();
                     whiteStone.setField(x + dx, y + dy);
                     return;
