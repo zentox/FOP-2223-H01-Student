@@ -2,13 +2,13 @@ package h01;
 
 import fopbot.Direction;
 import fopbot.Robot;
+import fopbot.RobotFamily;
 import fopbot.World;
 import org.tudalgo.algoutils.student.Student;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static org.tudalgo.algoutils.student.Student.crash;
 import static org.tudalgo.algoutils.student.io.PropertyUtils.getIntProperty;
 
 /**
@@ -120,7 +120,7 @@ public class Checkers {
             direction = Direction.LEFT;
         }
 
-        whiteStone = new Robot(x, y, direction, 0);
+        whiteStone = new Robot(x, y, direction, 0, RobotFamily.SQUARE_WHITE);
     }
 
     /**
@@ -161,7 +161,7 @@ public class Checkers {
 
         // Random number of coins (do not forget that the second parameter of nextInt is exclusive)
         int numberOfCoins = ThreadLocalRandom.current().nextInt(MIN_NUMBER_OF_COINS, MAX_NUMBER_OF_COINS + 1);
-        blackStone0 = new Robot(x, y, direction, numberOfCoins);
+        blackStone0 = new Robot(x, y, direction, numberOfCoins, RobotFamily.SQUARE_BLACK);
 
 
         // Black stone 1
@@ -192,7 +192,7 @@ public class Checkers {
 
         // Random number of coins (do not forget that the second parameter of nextInt is exclusive)
         numberOfCoins = ThreadLocalRandom.current().nextInt(MIN_NUMBER_OF_COINS, MAX_NUMBER_OF_COINS + 1);
-        blackStone1 = new Robot(x, y, direction, numberOfCoins);
+        blackStone1 = new Robot(x, y, direction, numberOfCoins, RobotFamily.SQUARE_BLACK);
 
 
         // Black stone 2
@@ -223,7 +223,7 @@ public class Checkers {
 
         // Random number of coins (do not forget that the second parameter of nextInt is exclusive)
         numberOfCoins = ThreadLocalRandom.current().nextInt(MIN_NUMBER_OF_COINS, MAX_NUMBER_OF_COINS + 1);
-        blackStone2 = new Robot(x, y, direction, numberOfCoins);
+        blackStone2 = new Robot(x, y, direction, numberOfCoins, RobotFamily.SQUARE_BLACK);
 
 
         // Black stone 3
@@ -254,7 +254,7 @@ public class Checkers {
 
         // Random number of coins (do not forget that the second parameter of nextInt is exclusive)
         numberOfCoins = ThreadLocalRandom.current().nextInt(MIN_NUMBER_OF_COINS, MAX_NUMBER_OF_COINS + 1);
-        blackStone3 = new Robot(x, y, direction, numberOfCoins);
+        blackStone3 = new Robot(x, y, direction, numberOfCoins, RobotFamily.SQUARE_BLACK);
 
 
         // Black stone 4
@@ -285,7 +285,7 @@ public class Checkers {
 
         // Random number of coins (do not forget that the second parameter of nextInt is exclusive)
         numberOfCoins = ThreadLocalRandom.current().nextInt(MIN_NUMBER_OF_COINS, MAX_NUMBER_OF_COINS + 1);
-        blackStone4 = new Robot(x, y, direction, numberOfCoins);
+        blackStone4 = new Robot(x, y, direction, numberOfCoins, RobotFamily.SQUARE_BLACK);
     }
 
     /**
@@ -467,7 +467,71 @@ public class Checkers {
      * Runs the action of the white team.
      */
     public void doWhiteTeamActions() {
-        crash(); // TODO: H2.2 - remove if implemented
+        int wx = whiteStone.getX();
+        int wy = whiteStone.getY();
+
+        // Check all diagonals (x+i,y+i), (x+1,y-1), (x-1,y+1), (x-1,y-1)
+        // Formula to check coordinate: Coordinate of white stone + offset * direction vector
+        for (int diagonal = 0; diagonal < 4; diagonal++) {
+            int dx;
+            int dy;
+            // Direction vector used to calculate the next field along the diagonal
+            if (diagonal == 0) {
+                dx = 1;
+                dy = 1;
+            } else if (diagonal == 1) {
+                dx = 1;
+                dy = -1;
+            } else if (diagonal == 2) {
+                dx = -1;
+                dy = -1;
+            } else {
+                dx = -1;
+                dy = 1;
+            }
+
+            // Offset used to calculate the next field along the diagonal
+            int ox = 1;
+            int oy = 1;
+
+            // Coordinate to check
+            int x = wx + ox * dx;
+            int y = wy + oy * dy;
+
+            // Since the white stone will be placed on the field after the black stone, we have to check if the possible
+            // new position of the white stone is within the world (coordinate of field to check + direction vector)
+            while (x + dx >= 0 && x + dx < NUMBER_OF_COLUMNS && y + dy >= 0 && y + dy < NUMBER_OF_ROWS) {
+                // Check if the field is occupied by a black stone (black stone must be turned on
+                // If we found one, we can stop the search
+                if (blackStone0.isTurnedOn() && blackStone0.getX() == x && blackStone0.getY() == y) {
+                    blackStone0.turnOff();
+                    whiteStone.setField(x + dx, y + dy);
+                    return;
+                } else if (blackStone1.isTurnedOn() && blackStone1.getX() == x && blackStone1.getY() == y) {
+                    blackStone1.turnOff();
+                    whiteStone.setField(x + dx, y + dy);
+                    return;
+                } else if (blackStone2.isTurnedOn() && blackStone2.getX() == x && blackStone2.getY() == y) {
+                    blackStone2.turnOff();
+                    whiteStone.setField(x + dx, y + dy);
+                    return;
+                } else if (blackStone3.isTurnedOn() && blackStone3.getX() == x && blackStone3.getY() == y) {
+                    blackStone3.turnOff();
+                    whiteStone.setField(x + dx, y + dy);
+                    return;
+                } else if (blackStone4.isTurnedOn() && blackStone4.getX() == x && blackStone4.getY() == y) {
+                    blackStone4.turnOff();
+                    whiteStone.setField(x + dx, y + dy);
+                    return;
+                }
+
+                // Update the coordinate to check
+                ox++;
+                oy++;
+                x = wx + ox * dx;
+                y = wy + oy * dy;
+            }
+        }
     }
 
     /**
